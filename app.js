@@ -84,50 +84,6 @@ app.post('/api/addconversions', async function (req, res) {
   }
 });
 
-app.post('/api/addclicks', async function (req, res) {
-
-  var request = {
-    chaincodeId: 'adverce',
-    fcn: 'addClick',
-    args: [
-      req.body.clickID,
-      req.body.fk_website_id,
-      req.body.fk_network_id,
-      req.body.fk_advertiser_id,
-      req.body.fk_campaign_id,
-      req.body.fk_publisher_id,
-      req.body.ad_id,
-      req.body.ad_type,
-      req.body.website_name,
-      req.body.campaign_name,
-      req.body.sub_id,
-      req.body.sub_id_1,
-      req.body.sub_id_2,
-      req.body.sub_id_3,
-      req.body.sub_id_4,
-      req.body.country,
-      req.body.country_code,
-      req.body.cpc,
-      req.body.ip,
-      req.body.trans_id,
-      req.body.checksum,
-      req.body.user_agent,
-      req.body.is_tablet,
-      req.body.is_mobile,
-      req.body.is_desktop,
-      req.body.createdAt + _time
-    ]
-  };
-
-  let response = await invoke.invokeCreate(request);
-  if (response) {
-    if(response.status == 200)
-    res.status(response.status).send({ message: "The click with ID: "+req.body.clickID+ " is stored in the blockchain with " +response.message  });
-    else
-    res.status(response.status).send({ message: response.message});
-  }
-
-});
 
 //-------------------------------------------------------------
 //----------------------  PUT API'S    -----------------------
