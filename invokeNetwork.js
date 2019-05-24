@@ -74,6 +74,7 @@ module.exports = {
       request = Object.assign(request, { txId: tx_id });
       // send the transaction proposal to the endorsing peers
       let results = await channel.sendTransactionProposal(request);
+      console.log("TESTING TEST : " + results);
       var proposalResponses = results[0];
       var proposal = results[1];
       if (proposalResponses && proposalResponses[0].response &&

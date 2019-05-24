@@ -33,292 +33,177 @@ app.listen(port, function () {
 //----------------------  POST API'S    -----------------------
 //-------------------------------------------------------------
 
-app.post('/api/addconversions', async function (req, res) {
+app.post('/api/addcampaign', async function (req, res) {
 
   var request = {
-    chaincodeId: 'adverce',
-    fcn: 'addConversion',
+    chaincodeId: 'election',
+    fcn: 'addCampaign',
     args: [
-      req.body.conversionID,
-      req.body.fk_website_id,
-      req.body.fk_event_id,
-      req.body.fk_segment_id,
-      req.body.fk_campaign_id,
-      req.body.fk_advertiser_id,
-      req.body.fk_network_id,
-      req.body.fk_publisher_id,
-      req.body.ad_id,
-      req.body.ad_type,
-      req.body.transaction_id,
-      req.body.transaction_status,
-      req.body.transaction_type,
-      req.body.conversion_ordervalue,
-      req.body.conversion_sale_ordernumber,
-      req.body.conversion_lead_ordernumber,
-      req.body.campaign_name,
-      req.body.website_name,
-      req.body.conversion_segment_name,
-      req.body.conversion_event_name,
-      req.body.reject_reason,
-      req.body.publisher_commission,
-      req.body.network_commission,
-      req.body.network_commission_percentage,
-      req.body.registered_ip,
-      req.body.country,
-      req.body.device,
-      req.body.country_code,
-      req.body.invoiced,
-      req.body.not_paid_by_advertiser,
-      req.body.paid_to_publisher,
-      req.body.paid_by_advertiser,
-      req.body.createdAt + _time
+
+      req.body.campaign_ID,
+      req.body.title,
+      req.body.no_of_ballots,
+      req.body.timestamp + _time,
+      req.body.campaign_startdate + _time,
+      req.body.campaign_enddate + _time,
+      req.body.campaign_type,
+      req.body.county,
+      req.body.district
+
     ]
   };
 
   let response = await invoke.invokeCreate(request);
   if (response) {
     if(response.status == 200)
-    res.status(response.status).send({ message: "The Conversion with ID: "+req.body.conversionID+ " is stored in the blockchain with " +response.message  });
+    res.status(response.status).send({ message: "The Campaign with ID: "+req.body.campaign_ID+ " is stored in the blockchain with " +response.message  });
     else
     res.status(response.status).send({ message: response.message});
   }
 });
 
-
-//-------------------------------------------------------------
-//----------------------  PUT API'S    -----------------------
-//-------------------------------------------------------------
-
-app.put('/api/updateclicks', async function (req, res) {
+app.post('/api/addballot', async function (req, res) {
 
   var request = {
-    chaincodeId: 'adverce',
-    fcn: 'updateClick',
+    chaincodeId: 'election',
+    fcn: 'addBallot',
     args: [
-      req.body.clickID,
-      req.body.fk_website_id,
-      req.body.fk_network_id,
-      req.body.fk_advertiser_id,
-      req.body.fk_campaign_id,
-      req.body.fk_publisher_id,
-      req.body.ad_id,
-      req.body.ad_type,
-      req.body.website_name,
-      req.body.campaign_name,
-      req.body.sub_id,
-      req.body.sub_id_1,
-      req.body.sub_id_2,
-      req.body.sub_id_3,
-      req.body.sub_id_4,
-      req.body.country,
-      req.body.country_code,
-      req.body.cpc,
-      req.body.ip,
-      req.body.trans_id,
-      req.body.checksum,
-      req.body.user_agent,
-      req.body.is_tablet,
-      req.body.is_mobile,
-      req.body.is_desktop,
-      req.body.createdAt + _time
+      req.body.ballot_ID,
+      req.body.campaign_ID,
+      req.body.timestamp
     ]
   };
 
   let response = await invoke.invokeCreate(request);
   if (response) {
     if(response.status == 200)
-    res.status(response.status).send({ message: "The click with ID: "+req.body.clickID+ " is updated in the blockchain with " +response.message  });
+    res.status(response.status).send({ message: "The Ballot with ID: "+req.body.ballot_ID+ " is stored in the blockchain with " +response.message  });
     else
     res.status(response.status).send({ message: response.message});
   }
-
 });
 
-app.put('/api/updateconversions', async function (req, res) {
+app.post('/api/addcampaigncandidates', async function (req, res) {
 
   var request = {
-    chaincodeId: 'adverce',
-    fcn: 'updateConversion',
+    chaincodeId: 'election',
+    fcn: 'addCampaignCandidates',
     args: [
-      req.body.conversionID,
-      req.body.fk_website_id,
-      req.body.fk_event_id,
-      req.body.fk_segment_id,
-      req.body.fk_campaign_id,
-      req.body.fk_advertiser_id,
-      req.body.fk_network_id,
-      req.body.fk_publisher_id,
-      req.body.ad_id,
-      req.body.ad_type,
-      req.body.transaction_id,
-      req.body.transaction_status,
-      req.body.transaction_type,
-      req.body.conversion_ordervalue,
-      req.body.conversion_sale_ordernumber,
-      req.body.conversion_lead_ordernumber,
-      req.body.campaign_name,
-      req.body.website_name,
-      req.body.conversion_segment_name,
-      req.body.conversion_event_name,
-      req.body.reject_reason,
-      req.body.publisher_commission,
-      req.body.network_commission,
-      req.body.network_commission_percentage,
-      req.body.registered_ip,
-      req.body.country,
-      req.body.device,
-      req.body.country_code,
-      req.body.invoiced,
-      req.body.not_paid_by_advertiser,
-      req.body.paid_to_publisher,
-      req.body.paid_by_advertiser,
-      req.body.createdAt + _time,
+    	req.body.campaign_ID,
+	    req.body.user_ID
     ]
   };
 
   let response = await invoke.invokeCreate(request);
   if (response) {
     if(response.status == 200)
-    res.status(response.status).send({ message: "The Conversion with ID: "+req.body.conversionID+ " is updated in the blockchain with " +response.message  });
+    res.status(response.status).send({ message: "A campaign candidiate with ID: "+req.body.ballot_ID+ " is stored in the blockchain with " +response.message  });
     else
     res.status(response.status).send({ message: response.message});
   }
 });
 
-//-------------------------------------------------------------
-//----------------------  GET API'S FOR CLICKS-----------------
-//-------------------------------------------------------------
+app.post('/api/addcampaignresults', async function (req, res) {
 
-
-app.get('/api/queryclickbyid', async function (req, res) {
-
-  const request = {
-    chaincodeId: 'adverce',
-    fcn: 'queryClick',
-    args: [req.query.clickID]
+  var request = {
+    chaincodeId: 'election',
+    fcn: 'addCampaignResults',
+    args: [
+    	req.body.campaign_ID,
+	    req.body.user_ID
+    ]
   };
-  let response = await query.invokeQuery(request)
-  if (response) {
-    if(response.status == 200)
-    res.status(response.status).send({ message: JSON.parse(response.message) });
-    else
-    res.status(response.status).send({ message: response.message });
-  }
 
-});
-
-app.get('/api/queryclicksbycreatedate', async function (req, res) {
-  const request = {
-    chaincodeId: 'adverce',
-    fcn: 'queryClicksByCreatedAt',
-    args: [req.query.createdAt + _time]
-  };
-  console.log(request)
-  let response = await query.invokeQuery(request)
-  if (response) {
-    if(response.status == 200)
-    res.status(response.status).send({ message: JSON.parse(response.message) });
-    else
-    res.status(response.status).send({ message: response.message });
-  }
-});
-
-app.get('/api/queryclicksbetweencreateddate', async function (req, res) {
-  const request = {
-    chaincodeId: 'adverce',
-    fcn: 'queryClicksBetweenCreatedDate',
-    args: [req.query.startdate + _time, req.query.enddate + _time]
-  };
-  let response = await query.invokeQuery(request)
-  if (response) {
-    if(response.status == 200)
-    res.status(response.status).send({ message: JSON.parse(response.message) });
-    else
-    res.status(response.status).send({ message: response.message });
-  }
-});
-
-//-------------------------------------------------------------
-//---------------  GET API'S FOR CONVERSIONS  -----------------
-//-------------------------------------------------------------
-
-app.get('/api/queryconversionbyid', async function (req, res) {
-  const request = {
-    chaincodeId: 'adverce',
-    fcn: 'queryConversion',
-    args: [req.query.conversionID]
-  };
-  let response = await query.invokeQuery(request);
-  if (response) {
-    if(response.status == 200)
-    res.status(response.status).send({ message: JSON.parse(response.message) });
-    else
-    res.status(response.status).send({ message: response.message });
-  }
-});
-
-app.get('/api/queryconversionsbycreatedate', async function (req, res) {
-  const request = {
-    chaincodeId: 'adverce',
-    fcn: 'queryConversionsByCreatedAt',
-    args: [req.query.createdAt + _time]
-  };
-  console.log(req.query.createdAt + _time)
-  let response = await query.invokeQuery(request)
-  if (response) {
-    if(response.status == 200)
-    res.status(response.status).send({ message: JSON.parse(response.message) });
-    else
-    res.status(response.status).send({ message: response.message });
-  }
-});
-
-app.get('/api/queryconversionsbetweencreateddate', async function (req, res) {
-  const request = {
-    chaincodeId: 'adverce',
-    fcn: 'queryConversionsBetweenCreatedDate',
-    args: [req.query.startdate + _time, req.body.enddate + _time]
-  };
-  let response = await query.invokeQuery(request)
-  if (response) {
-    if(response.status == 200)
-    res.status(response.status).send({ message: JSON.parse(response.message) });
-    else
-    res.status(response.status).send({ message: response.message });
-  }
-});
-
-
-//-------------------------------------------------------------
-//----------------------  DELETE API'S    ------------------------
-//-------------------------------------------------------------
-
-app.post("/api/deleteclick",async function(req,res){
-  const request = {
-    chaincodeId: 'adverce',
-    fcn: 'deleteClick',
-    args: [req.body.clickID]
-  };
   let response = await invoke.invokeCreate(request);
   if (response) {
     if(response.status == 200)
-    res.status(response.status).send({ message: "The click with ID: "+req.body.clickID+ " is deleted from the blockchain. " +response.message });
+    res.status(response.status).send({ message: "A Ballot with ID: "+req.body.ballot_ID+ " has been casted and stored into the blockchain with " +response.message  });
     else
     res.status(response.status).send({ message: response.message});
   }
 });
 
-app.post("/api/deleteconversion",async function(req,res){
+
+//-------------------------------------------------------------
+//----------------------  GET API'S  --------------------------
+//-------------------------------------------------------------
+
+app.get('/api/querycampaign', async function (req, res) {
+
   const request = {
-    chaincodeId: 'adverce',
-    fcn: 'deleteConversion',
-    args: [req.body.conversionID]
+    chaincodeId: 'election',
+    fcn: 'queryCampaignCandidates',
+    args: [req.query.campaign_ID]
   };
-  let response = await invoke.invokeCreate(request);
+  let response = await query.invokeQuery(request)
   if (response) {
     if(response.status == 200)
-    res.status(response.status).send({ message: "The click with ID: "+req.body.conversionID+ " is deleted from the blockchain. " +response.message });
+    res.status(response.status).send({ message: JSON.parse(response.message) });
     else
-    res.status(response.status).send({ message: response.message});
+    res.status(response.status).send({ message: response.message });
+  }
+});
+
+app.get('/api/queryballot', async function (req, res) {
+
+    const request = {
+      chaincodeId: 'election',
+      fcn: 'queryballot',
+      args: [req.query.ballot_ID]
+    };
+    let response = await query.invokeQuery(request)
+    if (response) {
+      if(response.status == 200)
+      res.status(response.status).send({ message: JSON.parse(response.message) });
+      else
+      res.status(response.status).send({ message: response.message });
+    }
+});
+
+app.get('/api/querycampaigncandidates', async function (req, res) {
+
+      const request = {
+        chaincodeId: 'election',
+        fcn: 'queryCampaignCandidates',
+        args: [req.query.campaign_ID]
+      };
+      let response = await query.invokeQuery(request)
+      if (response) {
+        if(response.status == 200)
+        res.status(response.status).send({ message: JSON.parse(response.message) });
+        else
+        res.status(response.status).send({ message: response.message });
+      }
+});
+
+app.get('/api/queryallcampaigncandidates', async function (req, res) {
+
+  const request = {
+    chaincodeId: 'election',
+    fcn: 'queryAllCampaignCandidates',
+    args: []
+  };
+  let response = await query.invokeQuery(request)
+  if (response) {
+    if(response.status == 200)
+    res.status(response.status).send({ message: JSON.parse(response.message) });
+    else
+    res.status(response.status).send({ message: response.message });
+  }
+});
+
+app.get('/api/querycampaignresults', async function (req, res) {
+
+  const request = {
+    chaincodeId: 'election',
+    fcn: 'queryCampaignresults',
+    args: [req.query.campaign_ID]
+  };
+  let response = await query.invokeQuery(request)
+  if (response) {
+    if(response.status == 200)
+    res.status(response.status).send({ message: JSON.parse(response.message) });
+    else
+    res.status(response.status).send({ message: response.message });
   }
 });
