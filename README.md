@@ -1,6 +1,4 @@
-# fabcar-network
-
-fabcar-network is a version of the Hyperledger Fabric fabcar sample which has been changed to use a profile.
+# Voting-Node-SDK
 
 
 ## Manual Build and Run
@@ -8,5 +6,3 @@ fabcar-network is a version of the Hyperledger Fabric fabcar sample which has be
 ```
 git clone the repository and cd into the folder
 ```
-
-# Voting-Node-SDK
